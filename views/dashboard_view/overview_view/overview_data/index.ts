@@ -101,6 +101,22 @@ const MOCK_OVERVIEW: DashboardOverview = {
     late: 1,
     excused: 1,
   },
+  recentResults: [
+    {
+      id: "res_1",
+      courseTitle: "Data Structures",
+      courseCode: "CSC 201",
+      grade: "A-",
+      gradePoints: 3.67,
+    },
+    {
+      id: "res_2",
+      courseTitle: "Linear Algebra",
+      courseCode: "MTH 201",
+      grade: "B+",
+      gradePoints: 3.5,
+    },
+  ],
 };
 
 // function delay<T>(value: T, ms = 800): Promise<T> {

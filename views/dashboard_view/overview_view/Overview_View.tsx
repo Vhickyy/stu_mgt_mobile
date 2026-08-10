@@ -1,33 +1,20 @@
 import App_Text from "@/components/app_ui/App_Text";
-import { Feather, Ionicons } from "@expo/vector-icons";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { router } from "expo-router";
 import React, { useRef } from "react";
-import { Pressable, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import Dashboard_Layout from "../components/Dashboard_Layout";
 import { useAcademicProfile } from "../grading_view/inner_views/academic_info_view/academic_info_hooks/useAcademicInfoApi";
 import Attendance_Card from "./overview_components/AttendanceCard";
+import Overview_Header from "./overview_components/Overview_Header";
 import Overview_Pill from "./overview_components/Overview_Pill";
+import Overview_Skeleton from "./overview_components/Overview_Skeleton";
 import Overview_Stats_Row from "./overview_components/Overview_Stats_Row";
 import Quick_Overview_Grid from "./overview_components/Quick_Overview_Grid";
+import ResultsPreviewCard from "./overview_components/ResultsPreviewCard";
+import StudentHubPromoCard from "./overview_components/StudentHubPromoCard";
 import Upcoming_Class_Card from "./overview_components/Upcoming_Class_Card";
 import { useDashboardOverview } from "./overview_hook/useOverviewApi";
-
-interface DashboardScreenProps {
-  //   studentFirstName: string;
-  //   onOpenMenu: () => void;
-  //   onOpenNotifications: () => void;
-  //   onViewAllCourses: () => void;
-  //   onPressUpcomingClass: () => void;
-  //   onViewAttendance: () => void;
-  //   onViewDetailedAnalytics: () => void;
-}
-
-function StatSkeleton() {
-  return (
-    <View className="bg-surface rounded-2xl border border-border p-4 h-24" />
-  );
-}
 
 export default function Overview_View() {
   const { data: profile } = useAcademicProfile();
@@ -37,27 +24,11 @@ export default function Overview_View() {
 
   return (
     <Dashboard_Layout>
-      <View className="flex-row items-center justify-between pt-2 pb-4">
-        <Pressable
-          onPress={() => {}}
-          className="w-10 h-10 items-center justify-center"
-        >
-          <Feather name="menu" size={20} color="#2F241F" />
-        </Pressable>
-        <App_Text variant="subtitle" className="text-text">
-          Dashboard
-        </App_Text>
-        <Pressable
-          onPress={() => {}}
-          className="w-10 h-10 items-center justify-center"
-        >
-          <Ionicons name="notifications-outline" size={22} color="#2F241F" />
-        </Pressable>
-      </View>
+      <Overview_Header />
 
       <ScrollView
         className="flex-1"
-        contentContainerClassName="pb-24 gap-4"
+        contentContainerClassName="py-4 gap-4"
         showsVerticalScrollIndicator={false}
       >
         <View>
@@ -77,39 +48,45 @@ export default function Overview_View() {
         )}
 
         {isLoading || !overview ? (
-          <View className="flex-row gap-3">
-            <StatSkeleton />
-            <StatSkeleton />
-          </View>
+          <Overview_Skeleton />
         ) : (
-          <Overview_Stats_Row
-            cgpa={overview.cgpa}
-            cgpaScale={overview.cgpaScale}
-            standing={overview.standing}
-            totalUnits={overview.totalUnitsRegistered}
-            onPressCgpa={() => summarySheetRef.current?.present()}
-          />
-        )}
+          <>
+            <Overview_Stats_Row
+              cgpa={overview.cgpa}
+              cgpaScale={overview.cgpaScale}
+              standing={overview.standing}
+              totalUnits={overview.totalUnitsRegistered}
+              onPressCgpa={() => summarySheetRef.current?.present()}
+            />
 
-        {overview && (
-          <Quick_Overview_Grid
-            stats={overview.quickOverview}
-            onViewAll={() => router.push("/(root)/(tabs)/courses")}
-          />
-        )}
+            <Quick_Overview_Grid
+              stats={overview.quickOverview}
+              onViewAll={() => router.push("/(root)/(tabs)/courses")}
+            />
 
-        {overview?.upcomingClass && (
-          <Upcoming_Class_Card
-            upcomingClass={overview.upcomingClass}
-            onPress={() => {}}
-          />
-        )}
+            <ResultsPreviewCard
+              results={overview.recentResults}
+              onViewAll={() => router.push("/(root)/(tabs)/results")}
+            />
 
-        {overview && (
-          <Attendance_Card
-            attendance={overview.attendance}
-            onViewPress={() => {}}
-          />
+            <StudentHubPromoCard
+              title="Explore Student Hub"
+              subtitle="Study tips, tools and resources picked for you."
+              ctaLabel="Take a look"
+            />
+
+            {overview.upcomingClass && (
+              <Upcoming_Class_Card
+                upcomingClass={overview.upcomingClass}
+                onPress={() => router.push("/(auth)/Sign_In")}
+              />
+            )}
+
+            <Attendance_Card
+              attendance={overview.attendance}
+              onViewPress={() => router.push("/(root)/(tabs)/courses")}
+            />
+          </>
         )}
       </ScrollView>
 

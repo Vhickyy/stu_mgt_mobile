@@ -41,4 +41,13 @@ export interface DashboardOverview {
   quickOverview: QuickOverviewStats;
   upcomingClass: UpcomingClass | null;
   attendance: AttendanceSummary;
+  recentResults: RecentResult[];
+}
+
+export interface RecentResult {
+  id: string;
+  courseTitle: string;
+  courseCode: string;
+  grade: string; // "A-", "B+"
+  gradePoints: number;
 }
