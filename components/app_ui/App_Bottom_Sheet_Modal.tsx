@@ -87,7 +87,7 @@ const App_Bottom_Sheet_Modal = forwardRef<BottomSheetModal, Props>(
           <View
             style={{
               backgroundColor: "white",
-              borderRadius: 10,
+              borderRadius: 20,
               flex: 1,
               overflow: "hidden",
             }}

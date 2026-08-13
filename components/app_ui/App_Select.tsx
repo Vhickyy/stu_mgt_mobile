@@ -13,6 +13,8 @@ interface SelectFieldProps {
   value: string;
   options: SelectOption[];
   onChange: (value: string) => void;
+  onBlur?: () => void;
+  error?: string;
   placeholder?: string;
 }
 
@@ -25,11 +27,13 @@ interface TriggerLayout {
 
 const MAX_MENU_HEIGHT = 260;
 
-export default function App_Select({
+export default function SelectField({
   label,
   value,
   options,
   onChange,
+  onBlur,
+  error,
   placeholder = "Select",
 }: SelectFieldProps) {
   const triggerRef = useRef<View>(null);
@@ -45,6 +49,11 @@ export default function App_Select({
     });
   }
 
+  function handleRequestClose() {
+    setOpen(false);
+    onBlur?.();
+  }
+
   return (
     <View className="w-full gap-2">
       {label && (
@@ -56,7 +65,9 @@ export default function App_Select({
       <Pressable
         ref={triggerRef}
         onPress={handleOpen}
-        className="border border-border rounded-xl flex-row items-center justify-between px-4 h-14 bg-surface"
+        className={`border rounded-xl flex-row items-center justify-between px-4 h-14 bg-surface ${
+          error ? "border-error" : "border-border"
+        }`}
       >
         <App_Text
           variant="body"
@@ -71,13 +82,19 @@ export default function App_Select({
         />
       </Pressable>
 
+      {error && (
+        <App_Text variant="caption" className="text-error">
+          {error}
+        </App_Text>
+      )}
+
       <Modal
         visible={open}
         transparent
         animationType="fade"
-        onRequestClose={() => setOpen(false)}
+        onRequestClose={handleRequestClose}
       >
-        <Pressable className="flex-1" onPress={() => setOpen(false)}>
+        <Pressable className="flex-1" onPress={handleRequestClose}>
           {layout && (
             <View
               style={{
@@ -100,6 +117,7 @@ export default function App_Select({
                       onPress={() => {
                         onChange(item.value);
                         setOpen(false);
+                        onBlur?.();
                       }}
                       className="flex-row items-center justify-between px-4 py-3 border-b border-border"
                     >

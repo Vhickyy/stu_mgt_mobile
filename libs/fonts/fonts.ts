@@ -63,8 +63,8 @@ export const lineHeight = {
   md: scaleFont(24),
   lg: scaleFont(26),
   xl: scaleFont(28),
-  "2xl": scaleFont(32),
-  "3xl": scaleFont(38),
+  "2xl": scaleFont(30),
+  "3xl": scaleFont(36),
   "4xl": scaleFont(44),
 };
 
@@ -145,7 +145,7 @@ export const typography = {
   title: {
     fontSize: fontSize["2xl"],
     lineHeight: lineHeight["2xl"],
-    fontWeight: fontWeight.semibold,
+    fontWeight: fontWeight.bold,
   },
   subtitle: {
     fontSize: fontSize.lg,

@@ -41,7 +41,7 @@ export default function App_Button({
     <Pressable
       {...props}
       className={cn(
-        "h-14 rounded-xl items-center justify-center",
+        "h-12 rounded-xl items-center justify-center",
         CONTAINER_STYLES[variant],
         className,
       )}
@@ -50,7 +50,7 @@ export default function App_Button({
         <ActivityIndicator color={INDICATOR_COLOR[variant]} />
       ) : (
         <App_Text
-          variant="subtitle"
+          // variant="subtitle"
           className={cn("font-semibold", TEXT_STYLES[variant])}
         >
           {title}

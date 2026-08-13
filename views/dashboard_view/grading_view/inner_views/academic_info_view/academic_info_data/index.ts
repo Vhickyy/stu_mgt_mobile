@@ -2,6 +2,7 @@ import {
   AcademicProfile,
   SaveAcademicProfileInput,
   Semester,
+  SemesterHistoryEntry,
 } from "../academic_info_types";
 
 export const SEMESTER_OPTIONS: Semester[] = ["1st Semester", "2nd Semester"];
@@ -66,4 +67,41 @@ export async function skipAcademicProfile(): Promise<AcademicProfile> {
     onboardingSkipped: true,
   };
   return delay(currentProfile);
+}
+
+const HISTORY: SemesterHistoryEntry[] = [
+  {
+    id: "h_2022_1",
+    academicYear: "2022/2023",
+    semester: "1st Semester",
+    isCurrent: false,
+  },
+  {
+    id: "h_2022_2",
+    academicYear: "2022/2023",
+    semester: "2nd Semester",
+    isCurrent: false,
+  },
+  {
+    id: "h_2023_1",
+    academicYear: "2023/2024",
+    semester: "1st Semester",
+    isCurrent: false,
+  },
+  {
+    id: "h_2023_2",
+    academicYear: "2023/2024",
+    semester: "2nd Semester",
+    isCurrent: false,
+  },
+  {
+    id: "h_2024_1",
+    academicYear: "2024/2025",
+    semester: "1st Semester",
+    isCurrent: true,
+  },
+];
+
+export async function fetchSemesterHistory(): Promise<SemesterHistoryEntry[]> {
+  return delay([...HISTORY]);
 }

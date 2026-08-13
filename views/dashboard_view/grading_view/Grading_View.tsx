@@ -51,11 +51,12 @@ export default function Grading_View() {
           </View> */}
 
           <App_Text
-            variant="heading"
+            variant="title"
             // className="text-center"
             // className="text-2xl font-bold text-text text-center"
           >
-            Choose your grading{"\n"}system
+            Choose your grading system
+            {/* Choose your grading{"\n"}system */}
           </App_Text>
           <App_Text className="w-[90%]">
             This helps us calculate your GPA and CGPA accurately.

@@ -12,3 +12,10 @@ export interface SaveAcademicProfileInput {
   currentAcademicYear: string;
   currentSemester: Semester;
 }
+
+export interface SemesterHistoryEntry {
+  id: string;
+  academicYear: string;
+  semester: Semester;
+  isCurrent: boolean;
+}

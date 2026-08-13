@@ -6,13 +6,13 @@ import {
   Path,
   RegisterOptions,
 } from "react-hook-form";
-import App_Input from "./App_Input";
+import SelectField from "./App_Select";
 
-type AppInputProps = React.ComponentProps<typeof App_Input>;
+type SelectFieldProps = React.ComponentProps<typeof SelectField>;
 
-interface FormInputProps<T extends FieldValues> extends Omit<
-  AppInputProps,
-  "value" | "onChangeText" | "onBlur" | "error"
+interface FormSelectProps<T extends FieldValues> extends Omit<
+  SelectFieldProps,
+  "value" | "onChange" | "onBlur" | "error"
 > {
   name: Path<T>;
   control: Control<T>;
@@ -22,20 +22,22 @@ interface FormInputProps<T extends FieldValues> extends Omit<
   >;
 }
 
-export default function App_Form_Input<T extends FieldValues>({
+export default function App_Form_Select<T extends FieldValues>({
   name,
   control,
+  rules,
   ...props
-}: FormInputProps<T>) {
+}: FormSelectProps<T>) {
   return (
     <Controller
       control={control}
       name={name}
+      rules={rules}
       render={({ field, fieldState }) => (
-        <App_Input
+        <SelectField
           {...props}
-          value={field.value}
-          onChangeText={field.onChange}
+          value={field.value ?? ""}
+          onChange={field.onChange}
           onBlur={field.onBlur}
           error={fieldState.error?.message}
         />

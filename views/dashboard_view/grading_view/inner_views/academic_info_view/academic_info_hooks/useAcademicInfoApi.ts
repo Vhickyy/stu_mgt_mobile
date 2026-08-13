@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   fetchAcademicProfile,
+  fetchSemesterHistory,
   saveAcademicProfile,
   skipAcademicProfile,
 } from "../academic_info_data";
@@ -32,5 +33,16 @@ export function useSkipAcademicProfile() {
     mutationFn: () => skipAcademicProfile(),
     onSuccess: (data) =>
       queryClient.setQueryData(academicProfileKeys.all, data),
+  });
+}
+
+export const semesterHistoryKeys = {
+  all: ["semester-history"] as const,
+};
+
+export function useSemesterHistory() {
+  return useQuery({
+    queryKey: semesterHistoryKeys.all,
+    queryFn: fetchSemesterHistory,
   });
 }
