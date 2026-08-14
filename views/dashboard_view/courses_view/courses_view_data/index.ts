@@ -126,3 +126,7 @@ export async function createCourseWithResult(
 
   return { course: newCourse, result };
 }
+
+export async function fetchCourseById(id: string): Promise<Course | null> {
+  return delay(courses.find((c) => c.id === id) ?? null);
+}

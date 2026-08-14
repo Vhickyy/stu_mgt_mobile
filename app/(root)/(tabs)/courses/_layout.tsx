@@ -5,6 +5,7 @@ export default function CoursesLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
       <Stack.Screen name="add-course" />
+      <Stack.Screen name="course-id" />
     </Stack>
   );
 }

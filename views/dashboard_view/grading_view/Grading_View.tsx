@@ -41,20 +41,8 @@ export default function Grading_View() {
         contentContainerClassName="px-5 pb-6"
         showsVerticalScrollIndicator={false}
       >
-        <View className=" mt-6 mb-6">
-          {/* <View className="w-32 h-32 items-center justify-center mb-6">
-            <Image
-              source={require("@/assets/images/grading-illustration.png")}
-              className="w-full h-full"
-              resizeMode="contain"
-            />
-          </View> */}
-
-          <App_Text
-            variant="title"
-            // className="text-center"
-            // className="text-2xl font-bold text-text text-center"
-          >
+        <View className=" mt-6 mb-6 gap-2">
+          <App_Text variant="title">
             Choose your grading system
             {/* Choose your grading{"\n"}system */}
           </App_Text>
