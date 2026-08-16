@@ -1,6 +1,7 @@
 import App_Button from "@/components/app_ui/App_Button";
 import App_Text from "@/components/app_ui/App_Text";
 import { useSemesterHistory } from "@/views/dashboard_view/grading_view/inner_views/academic_info_view/academic_info_hooks/useAcademicInfoApi";
+import { useResultForCourse } from "@/views/dashboard_view/results_view/result_view_hook/useResultApi";
 import { Feather } from "@expo/vector-icons";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { router, useLocalSearchParams } from "expo-router";
@@ -10,7 +11,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import {
   useCourse,
   useDeleteCourse,
-  useResultForCourse,
 } from "../../courses_view_hooks/useCourseApi";
 import Edit_Course_Modal from "../../courses_view_modals/Edit_Course_Modal";
 import Course_Result_Card from "./course_details_components/Course_Result_Card";

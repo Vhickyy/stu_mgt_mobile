@@ -34,7 +34,11 @@ export default function App_Input({
         {leftIcon}
         <TextInput
           {...props}
-          className={cn("text-base", error && "border-red-500", className)}
+          className={cn(
+            "text-base flex-1",
+            error && "border-red-500",
+            className,
+          )}
           placeholderTextColor="#9CA3AF"
         />
         {rightIcon}

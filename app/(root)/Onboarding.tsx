@@ -33,7 +33,8 @@ const Onboarding = () => {
 
         <App_Button
           title="Get Started"
-          onPress={() => router.push("/Grading_System")}
+          onPress={() => router.push("/(auth)/Sign_In")}
+          // onPress={() => router.push("/Grading_System")}
         />
       </View>
     </SafeAreaView>

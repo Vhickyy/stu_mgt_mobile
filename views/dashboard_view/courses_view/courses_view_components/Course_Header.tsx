@@ -6,7 +6,6 @@ import { Pressable, View } from "react-native";
 import Course_Pill from "./Course_Pill";
 
 const Course_Header = ({
-  isCurrent,
   activePeriod,
   historySheetRef,
 }: {
@@ -27,7 +26,7 @@ const Course_Header = ({
               params: {
                 academicYear: activePeriod?.academicYear,
                 semester: activePeriod?.semester,
-                current: String(activePeriod?.isCurrent ?? true),
+                current: String(activePeriod?.isCurrent),
               },
             })
           }

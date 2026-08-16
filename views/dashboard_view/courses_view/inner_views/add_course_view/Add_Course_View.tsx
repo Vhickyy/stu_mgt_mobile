@@ -33,6 +33,7 @@ export default function Add_Course_View() {
     semester?: string;
     current?: string;
   }>();
+
   const { data: profile } = useAcademicProfile();
   const { data: gradingSystem } = useGradingSystem();
 
@@ -136,7 +137,7 @@ export default function Add_Course_View() {
         <Add_Course_Form
           control={control}
           gradePoints={gradePoints}
-          isCurrentPeriod
+          isCurrentPeriod={isCurrentPeriod}
         />
       </ScrollView>
       <App_Button

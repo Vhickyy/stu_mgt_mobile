@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Semester } from "../../grading_view/inner_views/academic_info_view/academic_info_types";
-import { fetchResultForCourse } from "../../results_view/result_view_data";
 import { CreateResultInput } from "../../results_view/result_view_types/imdex";
 import {
   createCourse,
@@ -88,17 +87,5 @@ export function useCourse(id: string) {
     queryKey: courseKeys.byId(id),
     queryFn: () => fetchCourseById(id),
     enabled: !!id,
-  });
-}
-
-export const resultKeys = {
-  byCourse: (courseId: string) => ["results", "course", courseId] as const,
-};
-
-export function useResultForCourse(courseId: string) {
-  return useQuery({
-    queryKey: resultKeys.byCourse(courseId),
-    queryFn: () => fetchResultForCourse(courseId),
-    enabled: !!courseId,
   });
 }

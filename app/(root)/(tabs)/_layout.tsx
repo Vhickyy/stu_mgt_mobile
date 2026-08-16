@@ -1,20 +1,17 @@
 import CustomTabBar from "@/components/shared/CustomTabBar";
 import { Tabs } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function TabLayout() {
   return (
-    <SafeAreaView className="flex-1 bg-background" edges={["top"]}>
-      <Tabs
-        screenOptions={{ headerShown: false }}
-        tabBar={(props) => <CustomTabBar {...props} />}
-      >
-        <Tabs.Screen name="index" />
-        <Tabs.Screen name="courses" />
-        <Tabs.Screen name="results" />
-        <Tabs.Screen name="profile" />
-      </Tabs>
-    </SafeAreaView>
+    <Tabs
+      screenOptions={{ headerShown: false }}
+      tabBar={(props) => <CustomTabBar {...props} />}
+    >
+      <Tabs.Screen name="index" />
+      <Tabs.Screen name="courses" />
+      <Tabs.Screen name="results" />
+      <Tabs.Screen name="profile" />
+    </Tabs>
   );
 }
 

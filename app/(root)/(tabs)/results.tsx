@@ -1,12 +1,8 @@
+import Result_View from "@/views/dashboard_view/results_view/Result_View";
 import React from "react";
-import { Text, View } from "react-native";
 
 const Results = () => {
-  return (
-    <View>
-      <Text>Results</Text>
-    </View>
-  );
+  return <Result_View />;
 };
 
 export default Results;

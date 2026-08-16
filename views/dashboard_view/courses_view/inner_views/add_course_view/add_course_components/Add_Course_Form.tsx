@@ -28,8 +28,10 @@ const Add_Course_Form = ({
       [],
     [gradingSystem],
   );
+
   return (
     <View className="gap-4 mb-4">
+      <App_Text>{isCurrentPeriod.toString()}</App_Text>
       <App_Form_Input
         control={control}
         name="title"

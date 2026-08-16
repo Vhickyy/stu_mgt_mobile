@@ -17,7 +17,7 @@ export default function Course_Row({
 }: CourseRowProps) {
   return (
     <Pressable
-      onPress={editable ? onPress : undefined}
+      onPress={onPress}
       className="flex-row items-center justify-between bg-surface rounded-2xl border border-border p-4 mb-3"
     >
       <View className="flex-row items-center gap-3 flex-1">

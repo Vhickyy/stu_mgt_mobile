@@ -1,5 +1,6 @@
 import App_Text from "@/components/app_ui/App_Text";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { router } from "expo-router";
 import React, { useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 import Dashboard_Layout from "../components/Dashboard_Layout";
@@ -44,14 +45,13 @@ export default function Courses_View() {
         activePeriod={activePeriod}
         historySheetRef={historySheetRef}
       />
-      {isLoading && !courses ? (
+      {isLoading && (
         <View className="gap-3">
           <View className="h-20 bg-surface rounded-2xl border border-border" />
           <View className="h-20 bg-surface rounded-2xl border border-border" />
         </View>
-      ) : !courses?.length ? (
-        <Empty_Course activePeriod={activePeriod} isCurrent={isCurrent} />
-      ) : (
+      )}
+      {courses && courses?.length ? (
         <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
           <View className="flex-row items-center justify-between mb-3">
             <App_Text variant="bodySmall" className="text-text-secondary">
@@ -69,12 +69,19 @@ export default function Courses_View() {
               key={course.id}
               course={course}
               editable={isCurrent}
-              onPress={() => openEdit(course)}
+              // onPress={() => router.push(`/(root)/(tabs)/courses/${course.id}`)}
+              onPress={() =>
+                router.push({
+                  pathname: "/(root)/course/[id]",
+                  params: { id: course.id },
+                })
+              }
             />
           ))}
         </ScrollView>
+      ) : (
+        <Empty_Course activePeriod={activePeriod} isCurrent={isCurrent} />
       )}
-
       <Semester_History_Modal
         ref={historySheetRef}
         selectedId={activePeriod?.id ?? null}
@@ -84,7 +91,6 @@ export default function Courses_View() {
           historySheetRef.current?.dismiss();
         }}
       />
-
       {/* <EditCourseSheet
         course={editingCourse}
         onDismiss={() => {
