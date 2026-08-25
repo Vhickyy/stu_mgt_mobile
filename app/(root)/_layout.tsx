@@ -11,10 +11,7 @@ const RootLayout = () => {
           name="courses/[id]"
           options={{ title: "Course Details" }}
         />
-        <Stack.Screen
-          name="courses/add"
-          options={{ title: "Course Details" }}
-        />
+        <Stack.Screen name="courses/add" options={{ title: "Add Course" }} />
       </Stack>
     </SafeAreaView>
   );

@@ -41,7 +41,7 @@ export default function App_Button({
     <Pressable
       {...props}
       className={cn(
-        "h-12 rounded-xl items-center justify-center",
+        "h-12 rounded-xl items-center justify-center disabled:bg-primary/50",
         CONTAINER_STYLES[variant],
         className,
       )}

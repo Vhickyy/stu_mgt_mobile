@@ -1,11 +1,16 @@
 import App_Button from "@/components/app_ui/App_Button";
 import App_Text from "@/components/app_ui/App_Text";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React from "react";
 import { Image, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Onboarding = () => {
+  const finishOnBoarding = () => {
+    AsyncStorage.setItem("hasOnboarded", "true");
+    router.push("/(auth)/Sign_In");
+  };
   return (
     <SafeAreaView className="flex-1 bg-background" edges={["bottom"]}>
       <View className="h-[55%]">
@@ -33,7 +38,7 @@ const Onboarding = () => {
 
         <App_Button
           title="Get Started"
-          onPress={() => router.push("/(auth)/Sign_In")}
+          onPress={finishOnBoarding}
           // onPress={() => router.push("/Grading_System")}
         />
       </View>

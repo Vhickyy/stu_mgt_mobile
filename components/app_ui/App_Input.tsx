@@ -1,14 +1,18 @@
+import { COLORS } from "@/constants/theme";
 import { cn } from "@/libs/cn";
 import { typography } from "@/libs/fonts";
-import React, { ReactNode } from "react";
-import { Text, TextInput, TextInputProps, View } from "react-native";
+import React from "react";
+import { TextInput, TextInputProps, View } from "react-native";
+import App_Icon, { IconName } from "./App_Icon";
+import App_Text from "./App_Text";
 
 interface AppInputProps extends TextInputProps {
   label?: string;
   error?: string;
   className?: string;
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
+  leftIcon?: IconName;
+  rightIcon?: IconName;
+  isValid?: boolean;
 }
 
 export default function App_Input({
@@ -17,21 +21,33 @@ export default function App_Input({
   className,
   leftIcon,
   rightIcon,
+  isValid,
   ...props
 }: AppInputProps) {
+  const iconColor = isValid ? COLORS.primary : "#6B7280";
+
   return (
-    <View className="w-full gap-2">
+    <View className="w-full gap-1">
       {label && (
-        <Text
+        <App_Text
           className="text-sm font-medium text-gray-700"
           style={{ fontSize: typography.bodySmall.fontSize }}
         >
           {label}
-        </Text>
+        </App_Text>
       )}
 
-      <View className="border border-gray-300 rounded-xl flex-row items-center px-4 h-14">
-        {leftIcon}
+      <View
+        className={cn(
+          "border rounded-xl flex-row items-center px-4 h-12",
+          error
+            ? "border-red-500"
+            : isValid
+              ? "border-primary"
+              : "border-gray-300",
+        )}
+      >
+        {leftIcon && <App_Icon name={leftIcon} color={iconColor} />}
         <TextInput
           {...props}
           className={cn(
@@ -41,10 +57,14 @@ export default function App_Input({
           )}
           placeholderTextColor="#9CA3AF"
         />
-        {rightIcon}
+        {rightIcon && <App_Icon name={rightIcon} color={iconColor} />}
       </View>
 
-      {error && <Text className="text-sm text-red-500">{error}</Text>}
+      {error && (
+        <App_Text variant="caption" className="text-sm text-[#EF4444]">
+          {error}
+        </App_Text>
+      )}
     </View>
   );
 }

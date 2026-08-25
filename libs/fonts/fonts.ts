@@ -150,12 +150,11 @@ export const typography = {
   subtitle: {
     fontSize: fontSize.lg,
     lineHeight: lineHeight.lg,
-    fontWeight: fontWeight.medium,
+    fontWeight: fontWeight.semibold,
   },
   body: {
     fontSize: fontSize.base,
-    lineHeight: lineHeight.base,
-    fontWeight: fontWeight.regular,
+    // fontWeight: fontWeight.regular,
   },
   bodySmall: {
     fontSize: fontSize.sm,

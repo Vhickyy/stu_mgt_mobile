@@ -87,7 +87,7 @@ const App_Bottom_Sheet_Modal = forwardRef<BottomSheetModal, Props>(
           <View
             style={{
               backgroundColor: "white",
-              borderRadius: 20,
+              borderRadius: 30,
               flex: 1,
               overflow: "hidden",
             }}
@@ -130,7 +130,7 @@ const App_Bottom_Sheet_Modal = forwardRef<BottomSheetModal, Props>(
               <Feather name="x" size={16} color="#7B6A64" />
             </Pressable>
           )}
-          <View className="mt-2 px-4">{children}</View>
+          <View className="mt-2 px-6 py-2">{children}</View>
         </BottomSheetView>
       </BottomSheetModal>
     );

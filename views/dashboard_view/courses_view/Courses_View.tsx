@@ -72,7 +72,7 @@ export default function Courses_View() {
               // onPress={() => router.push(`/(root)/(tabs)/courses/${course.id}`)}
               onPress={() =>
                 router.push({
-                  pathname: "/(root)/course/[id]",
+                  pathname: "/(root)/courses/[id]",
                   params: { id: course.id },
                 })
               }

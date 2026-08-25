@@ -1,5 +1,6 @@
+import AuthProvider from "@/context/AuthContext";
 import "@/global.css";
-import { queryClient } from "@/libs/query-client";
+import { queryClient } from "@/libs/api/query-client";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Slot } from "expo-router";
@@ -12,7 +13,9 @@ export default function RootLayout() {
       <BottomSheetModalProvider>
         <SafeAreaProvider>
           <QueryClientProvider client={queryClient}>
-            <Slot />
+            <AuthProvider>
+              <Slot />
+            </AuthProvider>
           </QueryClientProvider>
         </SafeAreaProvider>
       </BottomSheetModalProvider>

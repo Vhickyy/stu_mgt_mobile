@@ -1,59 +1,124 @@
-import App_Form_Input from "@/components/app_ui/App_Form_Input";
-import App_Icon from "@/components/app_ui/App_Icon";
 import App_Text from "@/components/app_ui/App_Text";
-import React from "react";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { router } from "expo-router";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { View } from "react-native";
+import { Keyboard, View } from "react-native";
+import { AuthErrorContent, getAuthErrorContent } from "../auth_api/authErrors";
+import Success_Error_Modal from "../auth_modals/Success_Error_Modal";
+import { RegisterSchema, registerSchema } from "../auth_schema";
 import Auth_Layout from "../auth_view_components/Auth_Layout";
-
-type IRegisterFoem = {
-  email: string;
-  password: string;
-};
+import Personal_Form from "./sign_up_components/Personal_Form";
+import Step_Progress from "./sign_up_components/Step_Progress";
+import University_Form from "./sign_up_components/University_Form";
+import { useSignUpMutation } from "./sign_up_hook/useSignUpApi";
 
 const Sign_Up_View = () => {
-  const { control, handleSubmit } = useForm<IRegisterFoem>({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+  const {
+    control,
+    handleSubmit,
+    watch,
+    getValues,
+    formState: { errors, isValid },
+  } = useForm<RegisterSchema>({
+    resolver: zodResolver(registerSchema),
+    mode: "all",
   });
+  const [steps, setSteps] = useState(0);
+  const { mutate, isPending } = useSignUpMutation();
+  const [password] = watch(["password"]);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const authModalRef = useRef<BottomSheetModal>(null);
+  const [errorContent, setErrorContent] = useState<AuthErrorContent | null>(
+    null,
+  );
+
+  const isStepOneValid =
+    password === confirmPassword &&
+    !errors.fullName &&
+    !errors.email &&
+    !errors.password;
+
+  const isConfirmPasswordValid = confirmPassword === password;
+
+  const confirmPasswordError =
+    confirmPassword.length > 0 && confirmPassword !== password
+      ? "Passwords do not match"
+      : undefined;
+
+  const handleProceed = async () => {
+    if (isStepOneValid) {
+      setSteps(1);
+    }
+  };
+
+  const onSubmit = (data: RegisterSchema) => {
+    Keyboard.dismiss();
+    const { email, password, ...rest } = data;
+    const formData = { email, password, confirmPassword, profile: rest };
+
+    mutate(formData, {
+      onSuccess: (response) => {
+        router.push({
+          pathname: "/(auth)/Verify_Email",
+          params: {
+            email: getValues("email"),
+          },
+        });
+      },
+      onError: (error: any) => {
+        setErrorContent(getAuthErrorContent(error));
+        authModalRef.current?.present();
+      },
+    });
+  };
 
   return (
     <>
       <Auth_Layout
-        title="Welcome Back!"
-        subText="Sign in to continue your academic journey."
-        btnText="Log In"
+        title="Create Account"
+        subText="Create your academic journey."
+        btnText={
+          steps == 0 ? "Proceed" : isPending ? "Loading" : "Create Account"
+        }
+        onPress={steps == 0 ? handleProceed : handleSubmit(onSubmit)}
+        disabled={steps == 0 ? !isStepOneValid : !isValid || isPending}
         belowButtonText={
-          <View className="flex-row justify-between mt-4">
-            <App_Text variant="caption">
-              Don't have an account?
-              <App_Text variant="caption">sign up.</App_Text>
+          <App_Text variant="caption" className="mt-2">
+            Have an account?
+            <App_Text
+              variant="caption"
+              className="text-primary"
+              style={{ fontWeight: 600 }}
+              onPress={() => router.push("/(auth)/Sign_In")}
+            >
+              sign in.
             </App_Text>
-            <App_Text variant="caption">Forgot Password?</App_Text>
-          </View>
+          </App_Text>
         }
       >
-        <View className="gap-6 mt-8 w-full">
-          <App_Form_Input
-            name="email"
-            control={control}
-            label="Email"
-            placeholder="john@email.com"
-            leftIcon={<App_Icon name="mail-outline" />}
-          />
-
-          <App_Form_Input
-            name="password"
-            control={control}
-            label="Password"
-            placeholder="******"
-            // leftIcon={<App_Icon name="" />}
-            secureTextEntry
-          />
+        <Step_Progress currentStep={steps} />
+        <View className="gap-3 mt-6 w-full">
+          {steps == 0 ? (
+            <Personal_Form
+              control={control}
+              confirmPassword={confirmPassword}
+              setConfirmPassword={setConfirmPassword}
+              isConfirmPasswordValid={isConfirmPasswordValid}
+              confirmPasswordError={confirmPasswordError}
+            />
+          ) : (
+            <University_Form control={control} />
+          )}
         </View>
       </Auth_Layout>
+      <Success_Error_Modal
+        message={errorContent?.message!}
+        onDismiss={() => authModalRef.current?.dismiss()}
+        ref={authModalRef}
+        title={errorContent?.title!}
+      />
     </>
   );
 };
